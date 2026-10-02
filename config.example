@@ -1,0 +1,30 @@
+# tRm configuration - copy to ~/.config/trm/config
+# Lines starting with # are comments.
+
+# How plots are shown: ascii | braille | blocks | image
+#   ascii   - works everywhere, even the Linux console (default)
+#   braille - finer detail, needs a font with braille characters
+#   blocks  - colored half-blocks, needs a color terminal
+#   image   - real image via kitty or sixel graphics (toggle with i in Plots)
+plot_mode = ascii
+
+# Graphics protocol for image view: auto | kitty | sixel | none
+image_protocol = auto
+
+# Colors for plot rendering: auto | truecolor | 256 | 16 | mono
+colors = auto
+
+# How to start R
+r_command = R
+r_args = --no-save --quiet
+rscript = Rscript
+
+# Linting on open/save: lintr | syntax | off
+# lintr is slower on old machines; "syntax" only checks for parse errors.
+lint = lintr
+
+# Auto-close brackets and quotes
+auto_pairs = true
+
+# Re-open the files from last time when started without arguments
+restore_session = true
