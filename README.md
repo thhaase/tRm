@@ -1,34 +1,61 @@
-# tRm
+<h1 align="center">tRm</h1>
 
-An RStudio-like IDE for R in the terminal. One static binary (~1.2 MB) for
-32-bit and 64-bit Linux. Uses under 10 MB of RAM besides R itself. Runs on
-old netbooks, over SSH, and on the bare Linux console.
+<p align="center">
+  <strong>RStudio, in your terminal.</strong><br>
+  One 1.2&nbsp;MB static binary · under 10&nbsp;MB of RAM · 32- and 64-bit Linux<br>
+  Runs over SSH, on the bare console, and on a netbook from 2009.
+</p>
 
-## Features
+<p align="center">
+  <img src="docs/img/overview.png" alt="tRm: Source, Console, Environment and Plots panes" width="100%">
+</p>
 
-- **Four panes:** Source, Console, Environment, and Files / Plots / Viewer / Help.
-- **RStudio workflow:** Ctrl+Enter sends the line, the full multi-line
-  statement, or the selection to the console.
-- **Real R console:** readline, history, tab completion and `browser()` work
-  as usual.
-- **Editor:** R syntax highlighting, bracket matching, auto-indent, auto-closing
-  brackets, undo/redo, find/replace, comments, tabs, and an outline of
-  `# Section ----` headers and functions.
-- **Lint:** syntax errors and lintr notes in the gutter, run in the background.
-- **Environment:** name, type, size and value of every object. Data frames
-  and lists expand to columns and elements, with a preview.
-- **Plots:** readable ASCII by default, with real text for titles, labels,
-  ticks and legends. Optional braille, color blocks, or real images (kitty /
-  sixel). Plot history and PNG export.
-- **Viewer:** `View(df)` shows a scrollable table.
-- **Help:** a searchable index of all installed packages. `?topic` opens
-  immediately, with no package selection menu.
-- **Robust:** errors are caught and logged instead of crashing, saves are
-  atomic, and unsaved files are backed up every 30 s.
+<p align="center">
+  <img src="docs/img/plot-ascii.png" alt="A ggplot drawn as ASCII, with title, axes and legend as real text" width="49%">
+  <img src="docs/img/plot-braille.png" alt="The same plot in braille mode" width="49%">
+</p>
+<p align="center">
+  <sub>A real ggplot, in a terminal. <b>ascii</b> works everywhere; <b>braille</b> adds
+  smoother points and lines. Titles, ticks, labels and the legend stay real text.</sub>
+</p>
 
-## Manual
+<p align="center">
+  <img src="docs/img/viewer.png" alt="View(df) opens a scrollable table" width="49%">
+  <img src="docs/img/help.png" alt="R help, searchable across every installed package" width="49%">
+</p>
+<p align="center">
+  <sub><b>Left:</b> <code>View(df)</code> opens a scrollable table.
+  <b>Right:</b> <code>?topic</code> opens help for any installed package — no selection menu.</sub>
+</p>
 
-### Start
+---
+
+## Why tRm
+
+- **The RStudio layout and the RStudio keys.** Four panes — Source, Console,
+  Environment, Files / Plots / Viewer / Help. Ctrl+Enter sends the line, the
+  whole multi-line statement, or the selection.
+- **A real R console.** readline, history, tab completion and `browser()` work
+  exactly as they do in R, because it *is* R, in a pty.
+- **Plots in any terminal.** Readable ASCII by default; braille, color blocks,
+  or real images (kitty / sixel) if your terminal can. Plot history and PNG export.
+- **A real editor.** Syntax highlighting, bracket matching, auto-indent,
+  undo/redo, find/replace, tabs, outline, and `lintr` notes in the gutter.
+- **Tiny.** One statically linked musl binary with no runtime dependencies.
+  It uses no CPU when idle.
+- **Hard to lose work with.** Errors are caught and logged instead of crashing,
+  saves are atomic, unsaved files are backed up every 30&nbsp;s.
+
+## Quick start
+
+```sh
+sudo apt install r-base          # or: dnf install R / pacman -S r
+git clone https://github.com/thhaase/tRm && cd tRm
+./build.sh && sh dist/install.sh # needs Rust: https://rustup.rs
+trm analysis.R
+```
+
+Then press <kbd>F1</kbd> for all shortcuts, or <kbd>F10</kbd> for the menu bar.
 
 ```sh
 trm                 # reopen the files from the last session
@@ -36,9 +63,11 @@ trm analysis.R      # open files
 trm ~/project       # start in a folder (R's working directory)
 ```
 
-F1 lists all shortcuts. F10 opens the menu bar (also clickable).
+---
 
-### Panes
+# Manual
+
+## Panes
 
 | Pane | Key | Fallback |
 | --- | --- | --- |
@@ -54,7 +83,7 @@ F1 lists all shortcuts. F10 opens the menu bar (also clickable).
   Ctrl+Shift+0 shows all panes again.
 - **Mouse:** click to focus, drag the borders to resize, scroll with the wheel.
 
-### Running code
+## Running code
 
 | Key | Action |
 | --- | --- |
@@ -72,7 +101,7 @@ F1 lists all shortcuts. F10 opens the menu bar (also clickable).
 chain, or call spread over several lines. Code sent while R is busy is queued
 and runs when R is ready.
 
-### Editing
+## Editing
 
 | Key | Action |
 | --- | --- |
@@ -91,7 +120,13 @@ and runs when R is ready.
 | Ctrl+PgUp / Ctrl+PgDn | Previous / next tab |
 | Ctrl+Q | Quit |
 
-### Environment
+The outline lists `# Section ----` headers and functions. Syntax errors and
+`lintr` notes appear in the gutter, linted in the background.
+
+## Environment
+
+Name, type, size and value of every object. Data frames and lists expand to
+columns and elements, with a preview of the selected object.
 
 | Key | Action |
 | --- | --- |
@@ -102,7 +137,7 @@ and runs when R is ready.
 | Del | `rm()` the object |
 | s | Sort by name or by size |
 
-### Plots
+## Plots
 
 | Key | Action |
 | --- | --- |
@@ -122,7 +157,7 @@ Display modes:
 - **blocks:** colored half blocks, a picture of the PNG.
 - **image:** the real PNG, via the kitty graphics protocol or sixel.
 
-### Help
+## Help
 
 - Type in the search box to search every installed package's topics.
 - `pkg::topic` limits the search to one package.
@@ -133,7 +168,7 @@ Display modes:
   document the topic, the first one opens and the others are listed at the
   top of the page.
 
-### Files
+## Files
 
 | Key | Action |
 | --- | --- |
@@ -144,9 +179,15 @@ Display modes:
 | . | Show / hide hidden files |
 | n | New file |
 
-## Install and setup
+## Viewer
 
-### 1. Install R
+`View(df)` shows a scrollable table.
+
+---
+
+# Install
+
+## 1. Install R
 
 ```sh
 sudo apt install r-base      # Debian, Ubuntu, Mint
@@ -159,7 +200,7 @@ sudo pacman -S r             # Arch
 For 32-bit machines, use a distribution that still ships 32-bit R, for
 example Debian 12.
 
-### 2. Build
+## 2. Build
 
 Requires Rust (https://rustup.rs). Build on any 64-bit Linux machine:
 
@@ -181,7 +222,7 @@ dist/
 
 Both binaries are statically linked (musl) and run on any Linux distribution.
 
-### 3. Install
+## 3. Install
 
 Copy `dist/` to the target machine, then:
 
@@ -204,7 +245,7 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 
 To update: rebuild, copy `dist/` again, and rerun `install.sh`.
 
-### 4. Terminal setup
+## 4. Terminal setup
 
 Everything works in any terminal through the fallbacks below. Setup is only
 needed for the exact RStudio shortcuts and real plot images.
@@ -243,7 +284,7 @@ Image plots do not pass through tmux or screen.
 (foot, WezTerm, mlterm, `xterm -ti vt340`). Support is detected automatically.
 To override, set `image_protocol` in the config.
 
-### 5. Configuration
+## 5. Configuration
 
 `~/.config/trm/config` (see `config.example`):
 
@@ -262,7 +303,7 @@ To override, set `image_protocol` in the config.
 On slow machines set `lint = syntax`. Your `~/.Rprofile` (or a project's
 `.Rprofile`) is still loaded.
 
-### Troubleshooting
+## Troubleshooting
 
 | Problem | Cause / fix |
 | --- | --- |
@@ -270,6 +311,8 @@ On slow machines set `lint = syntax`. Your `~/.Rprofile` (or a project's
 | "could not start R" | R is not installed or not in `PATH`; set `r_command = /path/to/R` |
 | A shortcut does nothing | The terminal does not send it; use the Alt fallback (step 4) |
 | Error message in the status bar | Logged to `~/.local/share/trm/crash.log`; unsaved files are in `~/.local/share/trm/recovery` |
+
+---
 
 ## How it works
 
